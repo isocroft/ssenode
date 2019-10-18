@@ -19,6 +19,7 @@ describe('ssenode Nodejs package', () => {
     source = new Source()
     options = {
       pad_for_ie: false,
+      no_ids: true,
       compress_output: false,
       prefered_event_name: 'broadcast',
       prefer_event_name: false
@@ -27,13 +28,14 @@ describe('ssenode Nodejs package', () => {
 
   afterEach(function (done) {
     server.close(done);
-    source = null
+    source = null;
+    options = null;
   });
 
   it('should send events', done => {
     const middlewareFn = EventStream.init(source, options);
     
-    app.use(middlwareFn);
+    app.use(middlewareFn);
     app.get('/stream', function(req, res){
         source.send('test message', '!This is a test!');
     });
@@ -65,6 +67,7 @@ describe('ssenode Nodejs package', () => {
   });
 
   it('should allow sending user-defined custom events', done => {
+    options.no_ids = false
     const middlewareFn = EventStream.init(source, options);
     
     app.use(middlewareFn);
