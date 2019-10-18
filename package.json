@@ -1,0 +1,40 @@
+{
+  "name": "ssenode",
+  "version": "0.1.0",
+  "description": "A library for setting up server-sent events in Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R spec test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/isocroft/ssenode.git"
+  },
+  "engines":{ "node": ">=4.0.0"},
+  "keywords": [
+    "nodejs",
+    "sse",
+    "server-sent",
+    "eventsource",
+    "stream"
+  ],
+  "author": "Ifeora Okechukwu",
+  "license": "MIT",
+  "standard": {
+    "globals": [
+      "describe",
+      "it"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/isocroft/ssenode/issues"
+  },
+  "homepage": "https://github.com/isocroft/ssenode",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "standard": "^12.0.1",
+    "eventsource": "^0.2.1",
+    "express": "^4.14.0"
+  }
+}
