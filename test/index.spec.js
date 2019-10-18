@@ -7,7 +7,7 @@ const EventSource = require('eventsource');
 
 const { Source, EventStream } = require('../index');
 
-describe('express-sse', () => {
+describe('ssenode Nodejs package', () => {
   let app;
   let server;
   let source;
