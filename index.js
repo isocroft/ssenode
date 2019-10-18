@@ -15,16 +15,18 @@ class Source extends EventEmitter {
             data: data
         };
 
-        if(isString(comment)){
+        if(typeof comment === 'string'){
             payload.comment = comment
         }
 
-        if(isString(event)){
+        if(typeof event === 'string'){
             payload.event = event
         }
 
-        if(isNumber(retry)){
-            payload.retry = retry
+        if(typeof retry === 'number'){
+            if(retry !== retry){ // filter out NaN
+                payload.retry = retry
+            }
         }
 
         this.emit('data', payload)
