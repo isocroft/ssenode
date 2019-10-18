@@ -11,10 +11,17 @@ Dino Paskvan](https://www.github.com/dpskvn) on [express-sse](https://www.github
 ```js
 
 const { Source, EventStream } = require('ssenode');
+
+const express = require('express');
 const cuid = require('cuid');
 
 
-var source = new Source(cuid);
+const source = new Source(cuid);
+const app = express();
+
+app.listen(3001, () => {
+  console.log('Server ready!');
+});
 
 app.use(
   EventStream.init(source, { no_ids:false, pad_for_ie:false })
