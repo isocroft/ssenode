@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - "12"
+  - "11"
+  - "10"
+  - "9"
+  - "8"
+  - "7"
+  - "6"
+  - "5"
+  - "4"
+
+before_script:
+- npm install -g istanbul
+- npm install -g mocha
+- npm install -g codecov
+
+after_success:
+  - istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*.js
+  - codecov
