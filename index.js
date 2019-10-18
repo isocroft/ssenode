@@ -59,8 +59,9 @@ class EventStream {
     static init(source, options) {
 
         var prepareTextData = function(data){
-            if(!data){
-                return `data:  `;
+            
+            if(!data || typeof data === 'function'){
+                return `data: null`;
             }
             
             if(typeof data === 'object'){
@@ -72,14 +73,10 @@ class EventStream {
                     return `data: ${dataLine}`;
                 }).join('');
             }else{
-                if(typeof data === 'function'){
-                    return `data: null`;
-                }
-
                 if(typeof data !== 'string'){
-                    return `data: ${String(data)}`;
+                    return `data: ${String(data)}\n\n`;
                 }else{
-                    return `data: ${data}`;
+                    return `data: ${data}\n\n`;
                 }
             }
         }
@@ -102,7 +99,7 @@ class EventStream {
                 }
 
                 if (options.compress_output) {
-                    // res.setHeader('Content-Encoding', 'gzip');
+                    ;// res.setHeader('Content-Encoding', 'gzip');
                 }
 
                 // browsers can disconnect at will despite the 'Connection: keep-alive'
@@ -148,7 +145,6 @@ class EventStream {
                     }
                 };
         
-            
                 source.on('data', dataListener);
             
                 // Remove listeners and reduce the number of max listeners on client disconnect
