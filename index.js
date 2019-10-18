@@ -113,6 +113,10 @@ class EventStream {
                 source.setMaxListeners(source.getMaxListeners() + 1);
             
                 const dataListener = payload => {
+                    
+                    if(options.no_ids){
+                        delete payload.id
+                    }
 
                     if(options.pad_for_ie){ 
                         // 2 kB padding for old IE (8/9)
