@@ -1,6 +1,8 @@
 'use strict';
 
-require('chai').should();
+var chai = require('chai');
+var expect = chai.expect
+var should = chai.should()
 
 const express = require('express');
 const EventSource = require('eventsource');
@@ -41,8 +43,10 @@ describe('ssenode Nodejs package', () => {
     });
 
     const es = new EventSource('http://localhost:3010/stream');
-    es.onmessage = e => {
-      JSON.parse(e.data).should.equal('test message');
+    es.onmessage = event => {
+      /* eslint-disable no-unused-expressions */
+      expect(JSON.parse(event.data)).to.be.equal('test message');
+      /* eslint-enable no-unused-expressions */
       es.close();
       done();
     };
@@ -60,7 +64,7 @@ describe('ssenode Nodejs package', () => {
 
     const es = new EventSource('http://localhost:3010/stream');
     es.addEventListener('broadcast', event => {
-      JSON.parse(event.data).should.equal('test message');
+      expect(JSON.parse(event.data)).to.be.equal('test message');
       es.close();
       done();
     });
@@ -76,9 +80,9 @@ describe('ssenode Nodejs package', () => {
     });
 
     const es = new EventSource('http://localhost:3010/stream');
-    es.addEventListener('update', e => {
-      JSON.parse(e.data).should.equal('test message');
-      e.lastEventId.should.equal('0');
+    es.addEventListener('update', event => {
+      expect(JSON.parse(event.data)).to.be.equal('test message');
+      expect(e.lastEventId).to.be.equal('0');
       es.close();
       done();
     };
