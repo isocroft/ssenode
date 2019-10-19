@@ -1,5 +1,5 @@
 {
-  "name": "ssenode",
+  "name": "server-events-nodejs",
   "version": "0.1.0",
   "description": "A library for setting up server-sent events in Node.js",
   "main": "index.js",
