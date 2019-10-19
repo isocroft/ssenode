@@ -3,6 +3,8 @@ const EventEmitter = require('events').EventEmitter;
 class Source extends EventEmitter {
 
     constructor (idGeneratorFunc) {
+        super();
+        
         guid.id = -1;
         this.idgenfn = idGeneratorFunc || function guid(){
             return ++guid.id;
