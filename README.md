@@ -1,4 +1,4 @@
-# ssenode
+# server-events-nodejs
 A library for setting up server-sent events in Node.js. This library was inspired by work done by [
 Dino Paskvan](https://www.github.com/dpskvn) on [express-sse](https://www.github.com/dpskvn/express-sse)
 
