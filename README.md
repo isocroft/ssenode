@@ -6,17 +6,17 @@ Dino Paskvan](https://www.github.com/dpskvn) on [express-sse](https://www.github
 
 >npm
 
-`npm install ssenode --save`
+`npm install server-events-nodejs --save`
 
 >yarn
 
-`yarn add ssenode`
+`yarn add server-events-nodejs`
 
 ## Usage
 
 ```js
 
-const { Source, EventStream } = require('ssenode');
+const { Source, EventStream } = require('server-events-nodejs');
 
 const express = require('express');
 const cuid = require('cuid');
