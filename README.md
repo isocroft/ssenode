@@ -55,8 +55,12 @@ app.get('/notifications', function(req){
 
 const evtSource = new EventSource('http://localhost:8080/notifications');
 
+evtSource.addEventListener('open', function(e) {
+   console.log("connection is open!");
+}, false);
+
 evtSource.addEventListener('update', function(e) {
-   console.log("message: " + e.data);
+   console.log("message: ", JSON.parse(e.data));
 });
 
 /* - logs to console -
