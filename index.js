@@ -101,10 +101,12 @@ class EventStream {
 
         // browsers can disconnect at will despite the 'Connection: keep-alive'
         // so we trick the browser to expect more data by sending SSE comments
-
-        var intervalId = setInterval(function () {
-          res.write(`: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`)
-        }, 4500)
+        
+        if (req.headers['connection'] !== 'keep-alive') {
+          var intervalId = setInterval(function () {
+            res.write(`: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`)
+          }, 4500);
+        }
 
         // Increase number of event listeners on init
         source.setMaxListeners(source.getMaxListeners() + 1)
