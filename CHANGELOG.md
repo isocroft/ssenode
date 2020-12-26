@@ -1,3 +1,9 @@
+# 0.1.1
+* Patch release
+
+## Fixes
+- FIx for HTTP `Connection` request header
+
 # 0.1.0
 * initial release
 
