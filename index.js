@@ -95,8 +95,10 @@ class EventStream {
           res.setHeader('X-Accel-Buffering', 'no')
         }
 
-        if (options.compress_output) {
-          ;// res.setHeader('Content-Encoding', 'gzip');
+        if ((req.headers['accept-encoding'] || '').search(/gzip|br/ig) > -1) {
+          if (options.compress_output) {
+            ;//res.setHeader('Content-Encoding', 'gzip');
+          }
         }
 
         // browsers can disconnect at will despite the 'Connection: keep-alive'
@@ -105,7 +107,7 @@ class EventStream {
         if (req.headers['connection'] !== 'keep-alive') {
           var intervalId = setInterval(function () {
             res.write(`: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`)
-          }, 4500);
+          }, 1500);
         }
 
         // Increase number of event listeners on init
