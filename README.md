@@ -41,7 +41,7 @@ app.use(
 app.get('/notifications', function(req){
           console.log('headers: ', req.headers);
           source.send({
-               ids: arr,
+               ids: [ '123', '456' ],
                timestamp: Date.now()
           }, '!this is a comment!')
     
