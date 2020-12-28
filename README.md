@@ -39,11 +39,19 @@ app.use(
 );
 
 app.get('/notifications', function(req){
-          console.log('headers: ', req.headers);
-          source.send({
-               ids: [ '123', '456' ],
-               timestamp: Date.now()
-          }, '!this is a comment!')
+    console.log('headers: ', req.headers);
+
+    // send comment: '!this is a comment!'
+    // send with event name: 'update'
+    // send with retry: 4500 (4.5 seconds)
+    source.send({
+            ids: [ '123', '456' ],
+            timestamp: Date.now()
+      }, 
+      '!this is a comment!', // comment
+      'update', // event
+      4500 // retry
+    );
     
 });
 
@@ -56,14 +64,21 @@ app.get('/notifications', function(req){
 const evtSource = new EventSource('http://localhost:8080/notifications');
 
 evtSource.addEventListener('open', function(e) {
-   console.log("connection is open!");
+  console.log("connection is open!");
 }, false);
 
+evtSource.addEventListener('error', function(e) {
+  console.error(e);
+  evtSource.close();
+})
+
 evtSource.addEventListener('update', function(e) {
-   console.log("message: ", JSON.parse(e.data));
-});
+  console.log("message: ", JSON.parse(e.data));
+}, false);
 
 /* - logs to console -
+
+  connection is open!
 
   message: {
     "ids": [
