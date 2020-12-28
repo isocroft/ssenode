@@ -1,6 +1,7 @@
 node_modules
 coverage
 test
+CONTRIBTING.md 
 .DS_Store
 .codeclimate.yml
 .travis.yml
