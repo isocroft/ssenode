@@ -35,7 +35,12 @@ class Source extends EventEmitter {
       /* eslint-enable no-self-compare */
     }
 
-    this.emit('data', payload)
+    if (payload.data !== null) {
+      payload.end = false;
+    } else {
+      payload.end = true;
+    }
+    this.emit('data', payload);
   }
 }
 
@@ -85,7 +90,7 @@ class EventStream {
         req.socket.setTimeout(0)
         req.socket.setNoDelay(true)
         req.socket.setKeepAlive(true)
-        res.statusCode = 200
+        res.statusCode = 204
 
         res.setHeader('Content-Type', 'text/event-stream')
         res.setHeader('Cache-Control', 'no-cache')
@@ -107,7 +112,7 @@ class EventStream {
         if (req.headers['connection'] !== 'keep-alive') {
           var intervalId = setInterval(function () {
             res.write(`: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`)
-          }, 1500)
+          }, 900)
         }
 
         // Increase number of event listeners on init
@@ -116,6 +121,10 @@ class EventStream {
         const dataListener = payload => {
           if (options.no_ids) {
             delete payload.id
+          }
+
+          if (payload.data) {
+            res.statusCode = 200;
           }
 
           if (options.pad_for_ie) {
@@ -145,6 +154,11 @@ class EventStream {
 
           if (payload.data) {
             res.write(`${prepareTextData(payload.data)}\n\n`)
+          } else {
+            if (intervalId) {
+              clearInterval(intervalId)
+            }
+            res.end(`:  \n\n`);
           }
         }
 
@@ -152,7 +166,9 @@ class EventStream {
 
         // Remove listeners and reduce the number of max listeners on client disconnect
         req.on('close', () => {
-          clearInterval(intervalId)
+          if (intervalId) {
+            clearInterval(intervalId)
+          }
           source.removeListener('data', dataListener)
           source.setMaxListeners(source.getMaxListeners() - 1)
         })
