@@ -94,6 +94,7 @@ class EventStream {
 
         res.setHeader('Content-Type', 'text/event-stream')
         res.setHeader('Cache-Control', 'no-cache')
+        res.setHeader('Connection', 'keep-alive')
 
         if (req.httpVersion !== '2.0') {
           res.setHeader('Connection', 'keep-alive')
@@ -109,7 +110,7 @@ class EventStream {
         // browsers can disconnect at will despite the 'Connection: keep-alive'
         // so we trick the browser to expect more data by sending SSE comments
 
-        if (req.headers['connection'] !== 'keep-alive') {
+        if ((req.headers['connection'] || '').indexOf('keep-alive') !== -1) {
           var intervalId = setInterval(function () {
             res.write(`: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`)
           }, 900)
